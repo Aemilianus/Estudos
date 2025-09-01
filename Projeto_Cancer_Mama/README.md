@@ -29,6 +29,6 @@ O relatório detalhado, contendo todos os gráficos e o código R, foi gerado em
 
 **Para visualizar o relatório interativo, use o link abaixo (hospedado com GitHub Pages):**
 
-### **[Clique aqui para ver o Relatório HTML Completo](https://aemilianus.github.io/Estudos/Projeto_Cancer_Mama/index.html)**
+### **[Clique aqui para ver o Relatório HTML Completo](https://aemilianus.github.io/Estudos/Projeto_Cancer_Mama/)**
 
 Este link te levará para a versão renderizada e interativa do relatório final.
