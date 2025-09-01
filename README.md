@@ -12,5 +12,5 @@ Cada projeto está em sua própria pasta e contém uma análise detalhada, o có
 ### 1. Modelagem Preditiva para Diagnóstico de Câncer de Mama
 *   **Descrição:** Uma análise completa e desenvolvimento de um modelo GLM para classificar tumores de mama, focando em interpretabilidade e validação estatística rigorosa.
 *   **Tecnologias:** R, ggplot2, caret, pROC.
-*   **[➡️ Ver Análise Detalhada do Projeto](./Projeto_Cancer_Mama/README.md)**
+*   **[➡️ Ver Análise Detalhada do Projeto](./Projeto_Cancer_Mama/)**
 
