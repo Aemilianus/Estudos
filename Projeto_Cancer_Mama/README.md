@@ -53,7 +53,7 @@ O modelo Logit final alcançou uma performance excelente no ambiente de teste, v
 
 O relatório detalhado da análise, contendo todos os gráficos e o código R, foi gerado em formato HTML a partir do arquivo R Markdown (`analise_cancer_mama.Rmd`).
 
-**Para visualizar o relatório interativo, [clique aqui para acessá-lo via GitHub Pages](https://aemilianus.github.io/Portfolio-Cientista-de-Dados/Projeto_Cancer_Mama/analise_cancer_mama.html).**
+**Para visualizar o relatório interativo, [clique aqui para acessá-lo via GitHub Pages](https://aemilianus.github.io/Projeto_Cancer_Mama/analise_cancer_mama.html).**
 *(Nota: Este link só funcionará após a configuração do GitHub Pages descrita na próxima seção).*
 
 ## 🛠️ Ferramentas Utilizadas
