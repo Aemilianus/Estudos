@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Felipe Fenelon" />
+
+
+<title>Modelos Lineares Generalizados</title>
+
+<script src="index_files/header-attrs-2.26/header-attrs.js"></script>
+<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="index_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="index_files/navigation-1.1/tabsets.js"></script>
+<link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="index_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Modelos Lineares Generalizados</h1>
+<h4 class="author">Felipe Fenelon</h4>
+<h4 class="date">27 de agosto de 2025</h4>
+
+</div>
+
+
+<div id="modelagem-preditiva-para-diagnóstico-de-câncer-de-mama"
+class="section level1">
+<h1>Modelagem Preditiva para Diagnóstico de Câncer de Mama</h1>
+<p>Este repositório documenta o desenvolvimento de um modelo de Machine
+Learning para classificar tumores de mama como benignos ou malignos. O
+projeto foi conduzido com foco em rigor estatístico, interpretabilidade
+e validação robusta.</p>
+<p><strong><a href="https://aemilianus.github.io/Estudos/">⬅️ Voltar
+para o Portfólio Principal</a></strong></p>
+<hr />
+<div id="objetivo" class="section level2">
+<h2>🎯 Objetivo</h2>
+<p>O objetivo central foi construir um modelo estatístico robusto e
+interpretável capaz de prever a malignidade de um tumor com alta
+acurácia.</p>
+</div>
+<div id="metodologia" class="section level2">
+<h2>🛠️ Metodologia</h2>
+<p>O projeto foi dividido em etapas claras, simulando um fluxo de
+trabalho profissional:</p>
+<ul>
+<li><p><strong>Análise Exploratória de Dados (EDA)</strong></p></li>
+<li><p><strong>Engenharia de Atributos e
+Pré-processamento</strong></p></li>
+<li><p><strong>Modelagem Comparativa (Logit, Probit,
+Cauchit)</strong></p></li>
+<li><p><strong>Validação Rigorosa e Seleção do Modelo
+Final</strong></p></li>
+</ul>
+</div>
+<div id="resultados-principais" class="section level2">
+<h2>📈 Resultados Principais</h2>
+<p>O modelo Logit final alcançou uma performance excelente no ambiente
+de teste:</p>
+<ul>
+<li><p><strong>AUC:</strong> <strong>0.9876</strong></p></li>
+<li><p><strong>Acurácia:</strong> <strong>92.3%</strong></p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="análise-e-preparação-dos-dados" class="section level1">
+<h1>Análise e Preparação dos Dados</h1>
+<div id="sobre-a-base-de-dados" class="section level2">
+<h2>Sobre a Base de Dados</h2>
+<p>O conjunto de dados BreastCancer contém informações de relatórios
+clínicos de pacientes, fornecidos periodicamente pelo Dr. Wolberg.
+Embora não haja atualizações desde 1992, os dados compreendem o período
+de janeiro de 1989 a novembro de 1991. O data frame original possui 699
+observações e 11 variáveis. Com exceção da variável de identificação
+(Id) e da variável resposta (Class), as demais foram convertidas para
+uma escala ordinal de 1 a 10. Para esta análise, a coluna de Id foi
+removida, pois não agrega valor preditivo ao modelo.</p>
+<pre class="r"><code>#Leitura da base de dados
+data(BreastCancer)
+# Excluindo ID, pois de nada serve
+cancer_subset1 &lt;- BreastCancer[,-1]
+# Estrutura inicial dos dados
+str(cancer_subset1)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    699 obs. of  10 variables:
+##  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
+##  $ Cell.size      : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 1 1 2 ...
+##  $ Cell.shape     : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 2 1 1 ...
+##  $ Marg.adhesion  : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 5 1 1 3 8 1 1 1 1 ...
+##  $ Epith.c.size   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 2 7 2 3 2 7 2 2 2 2 ...
+##  $ Bare.nuclei    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 10 2 4 1 10 10 1 1 1 ...
+##  $ Bl.cromatin    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 3 3 3 3 9 3 3 1 2 ...
+##  $ Normal.nucleoli: Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 7 1 7 1 1 1 1 ...
+##  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
+##  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...</code></pre>
+</div>
+<div id="dicionário-de-variáveis" class="section level2">
+<h2>Dicionário de Variáveis</h2>
+<p>Aqui está uma breve descrição do significado de cada variável
+preditora, interpretada no contexto do diagnóstico de câncer de
+mama:</p>
+<ul>
+<li><p>Cl.thickness (Espessura do Aglomerado): Células epiteliais da
+mama podem se agrupar. Em tumores, esses aglomerados tendem a ser mais
+espessos e desorganizados. Um valor alto pode ser um sinal de
+malignidade.</p></li>
+<li><p>Cell.size (Uniformidade do Tamanho da Célula): Avalia a variação
+no tamanho das células. Células cancerígenas frequentemente exibem
+pleomorfismo (grande variação de tamanho), enquanto células benignas são
+mais uniformes.</p></li>
+<li><p>Cell.shape (Uniformidade do Formato da Célula): Similar à
+anterior, mas focada no formato. Células malignas perdem sua forma
+regular e se tornam mais irregulares. É esperado que esta variável seja
+altamente correlacionada com Cell.size.</p></li>
+<li><p>Marg.adhesion (Adesão Marginal): Mede a capacidade de adesão das
+células entre si. A perda de adesão é uma característica de células
+cancerígenas, relacionada à sua capacidade de invadir outros tecidos e
+causar metástases.</p></li>
+<li><p>Epith.c.size (Tamanho da Célula Epitelial Individual): Mede o
+tamanho de células epiteliais que não estão em aglomerados. Em células
+malignas, o núcleo tende a aumentar, “esticando” a célula e aumentando
+seu tamanho geral. É provável que seja correlacionada com
+Cell.size.</p></li>
+<li><p>Bare.nuclei (Núcleos Nus): Refere-se a núcleos vistos na amostra
+sem o citoplasma ao redor. O citoplasma de células malignas é mais
+frágil e tende a se romper durante a preparação da lâmina, resultando em
+“núcleos nus”, um forte indicador de malignidade.</p></li>
+<li><p>Bl.cromatin (Cromatina Branda): Descreve a textura da cromatina
+(complexo de DNA e proteínas). Em células malignas, a cromatina se
+agrupa de forma grosseira e irregular, diferente do aspecto “brando” e
+suave em células normais.</p></li>
+<li><p>Normal.nucleoli (Nucléolos Normais): Avalia a proeminência dos
+nucléolos. Em células cancerígenas, que possuem alta atividade de
+síntese, os nucléolos se tornam maiores e mais fáceis de
+visualizar.</p></li>
+<li><p>Mitoses (Mitoses): Conta a quantidade de células em processo de
+divisão celular na amostra. Como o câncer é uma doença de proliferação
+celular descontrolada, um número elevado de mitoses é um indicador chave
+de malignidade.</p></li>
+<li><p>Class (Classe): A variável resposta de interesse, que classifica
+a amostra como benign (benigna) ou malignant (maligna). O principal
+interesse clínico é prever a classe malignant com a maior precisão e
+sensibilidade possível.</p></li>
+</ul>
+<p>#Divisão da Base em Treino e Teste A base de dados foi dividida em um
+conjunto de treino (70%) e um de teste (30%). A divisão foi
+estratificada pela variável Class para garantir que a proporção de casos
+benignos e malignos seja a mesma em ambos os conjuntos, o que é crucial
+para a validação do modelo.</p>
+<pre class="r"><code>set.seed(123)
+trainIndex &lt;- createDataPartition(cancer_subset1$Class, p = 0.7, list = FALSE)
+treino &lt;- cancer_subset1[trainIndex, ]
+teste &lt;- cancer_subset1[-trainIndex, ]
+#Verificando a proporção em cada conjunto
+prop.table(table(treino$Class))</code></pre>
+<pre><code>## 
+##    benign malignant 
+##  0.655102  0.344898</code></pre>
+<pre class="r"><code>prop.table(table(teste$Class))</code></pre>
+<pre><code>## 
+##    benign malignant 
+## 0.6555024 0.3444976</code></pre>
+</div>
+</div>
+<div id="análise-exploratória-e-engenharia-de-atributos"
+class="section level1">
+<h1>Análise Exploratória e Engenharia de Atributos</h1>
+<p>Esta seção detalha a análise exploratória realizada exclusivamente na
+base de treino para guiar o pré-processamento e a criação de novas
+variáveis (engenharia de atributos).</p>
+<div id="investigação-de-variância" class="section level2">
+<h2>Investigação de Variância</h2>
+<p>A função nearZeroVar do pacote caret foi utilizada para identificar
+variáveis com variância muito baixa ou nula, que geralmente possuem
+pouco poder preditivo.</p>
+<pre class="r"><code>nzv_report &lt;- nearZeroVar(treino, saveMetrics = TRUE)
+print(nzv_report)</code></pre>
+<pre><code>##                 freqRatio percentUnique zeroVar   nzv
+## Cl.thickness     1.100000     2.0408163   FALSE FALSE
+## Cell.size        5.804348     2.0408163   FALSE FALSE
+## Cell.shape       5.104167     2.0408163   FALSE FALSE
+## Marg.adhesion    6.085106     2.0408163   FALSE FALSE
+## Epith.c.size     5.254902     2.0408163   FALSE FALSE
+## Bare.nuclei      3.157303     2.0408163   FALSE FALSE
+## Bl.cromatin      1.008547     2.0408163   FALSE FALSE
+## Normal.nucleoli  7.800000     2.0408163   FALSE FALSE
+## Mitoses         15.074074     1.8367347   FALSE FALSE
+## Class            1.899408     0.4081633   FALSE FALSE</code></pre>
+<p>Apenas a variável Mitoses se aproximou de ser considerada de
+variância quase nula, com a categoria mais frequente (“1”) aparecendo
+mais de 15 vezes para cada ocorrência da segunda mais frequente. Isso
+indica um forte desbalanceamento. O gráfico de barras abaixo ajuda a
+visualizar essa relação.</p>
+<pre class="r"><code>ggplot(data = treino, aes(x = Mitoses, fill = Class)) +
+geom_bar(position = &quot;dodge&quot;) +
+labs(
+title = &quot;Distribuição da Atividade de Mitoses por Classe&quot;,
+subtitle = &quot;A maioria das amostras apresenta baixo índice de Mitoses&quot;,
+x = &quot;Índice de Mitoses&quot;,
+y = &quot;Contagem de Amostras&quot;,
+fill = &quot;Diagnóstico&quot;
+) +
+scale_fill_manual(values = c(&quot;benign&quot; = &quot;#4A74F3&quot;, &quot;malignant&quot; = &quot;#B55CE6&quot;)) +
+theme_minimal() +
+theme(
+plot.title = element_text(hjust = 0.5),
+plot.subtitle = element_text(hjust = 0.5)
+)</code></pre>
+<div class="figure">
+<img src="index_files/figure-html/plot_mitoses-1.png" alt="Distribuição da variável Mitoses por Classe." width="672" />
+<p class="caption">
+Distribuição da variável Mitoses por Classe.
+</p>
+</div>
+<p>Apesar do desbalanceamento, o gráfico mostra que, embora existam
+muitos casos malignos com mitose = 1, valores maiores que 1 são quase
+que exclusivamente malignos. Isso sugere que agrupar a variável em duas
+categorias (“LOW” e “HIGH”) pode ser uma boa idea. ## Análise de
+Correlação Para investigar a relação entre as variáveis preditoras, foi
+gerada uma matriz de correlação de Spearman.</p>
+<pre class="r"><code>data_for_cor &lt;- treino %&gt;%
+mutate(across(Cl.thickness:Mitoses, ~as.numeric(as.character(.)))) %&gt;%
+select(-c(Class))
+correlation_matrix(data_for_cor, &quot;Matriz de Correlação Geral&quot;)</code></pre>
+<div class="figure">
+<img src="index_files/figure-html/cor_geral-1.png" alt="Correlação de Spearman entre todas as variáveis preditoras." width="672" />
+<p class="caption">
+Correlação de Spearman entre todas as variáveis preditoras.
+</p>
+</div>
+<p>O correlograma geral revela uma forte correlação positiva entre quase
+todas as variáveis. Notavelmente, Cell.size e Cell.shape possuem uma
+correlação de 0.91, indicando alta colinearidade e sugerindo que uma
+delas deveria ser removida. Para uma análise mais profunda, as
+correlações foram analisadas separadamente para cada classe (benign e
+malignant).</p>
+<pre class="r"><code># Preparando dados
+data_for_cor_bening &lt;- subset(treino, Class == &quot;benign&quot;) %&gt;%
+mutate(across(Cl.thickness:Mitoses, ~as.numeric(as.character(.)))) %&gt;%
+select(-c(Class))
+data_for_cor_malig &lt;- subset(treino, Class == &quot;malignant&quot;) %&gt;%
+mutate(across(Cl.thickness:Mitoses, ~as.numeric(as.character(.)))) %&gt;%
+select(-c(Class))
+
+# Plotando
+correlation_matrix(data_for_cor_bening, &quot;Correlação na Classe Benigna&quot;)</code></pre>
+<div class="figure">
+<img src="index_files/figure-html/cor_split-1.png" alt="Correlação de Spearman para as classes Benigna (esquerda) e Maligna (direita)." width="672" />
+<p class="caption">
+Correlação de Spearman para as classes Benigna (esquerda) e Maligna
+(direita).
+</p>
+</div>
+<pre class="r"><code>correlation_matrix(data_for_cor_malig, &quot;Correlação na Classe Maligna&quot;)</code></pre>
+<div class="figure">
+<img src="index_files/figure-html/cor_split-2.png" alt="Correlação de Spearman para as classes Benigna (esquerda) e Maligna (direita)." width="672" />
+<p class="caption">
+Correlação de Spearman para as classes Benigna (esquerda) e Maligna
+(direita).
+</p>
+</div>
+<p>A análise separada revela que as relações entre as variáveis mudam
+dependendo da classe. A correlação entre Cell.size e Cell.shape continua
+alta em ambos os grupos. Curiosamente, a variável Cl.thickness demonstra
+um comportamento de interação: ela possui correlações mais fracas no
+grupo benigno e mais fortes no grupo maligno, sugerindo que seu papel
+muda quando a malignidade está presente.</p>
+</div>
+<div id="gráficos-de-barras-entre-covariáveis-e-class"
+class="section level2">
+<h2>Gráficos de Barras entre covariáveis e Class</h2>
+<pre class="r"><code># Agora, podemos avaliar o comportamento das outras variáveis restantes frente a
+# variável resposta
+
+# Vetor que acumula os nomes que não são as que não quero fazer gráficos.
+variaveis_para_plotar &lt;-
+  names(treino)[!names(treino) %in% c(&quot;Mitoses_grouped&quot;, &quot;Class&quot;)]
+
+# Loop para criar e imprimir um gráfico para cada variável
+for (variavel in variaveis_para_plotar) {
+  
+  # Criar o gráfico
+  p &lt;- ggplot(treino, aes_string(x = variavel, fill = &quot;Class&quot;)) +
+    geom_bar(position = &quot;dodge&quot;) +
+    labs(
+      title = paste(&quot;Distribuição de&quot;, variavel, &quot;por Classe&quot;),
+      x = variavel,
+      y = &quot;Frequência&quot;
+    ) +
+    scale_fill_manual(values = c(&quot;benign&quot; = &quot;#4A74F3&quot;, &quot;malignant&quot; = &quot;#B55CE6&quot;)) +
+    theme_minimal()
+  
+  # Imprimir o gráfico no painel de Plots
+  print(p)
+}</code></pre>
+<pre><code>## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+## ℹ Please use tidy evaluation idioms with `aes()`.
+## ℹ See also `vignette(&quot;ggplot2-in-packages&quot;)` for more information.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-2.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-3.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-4.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-5.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-6.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-7.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-8.png" width="672" /><img src="index_files/figure-html/unnamed-chunk-1-9.png" width="672" /></p>
+</div>
+<div id="pré-processamento" class="section level2">
+<h2>Pré-processamento</h2>
+<p>Com base na análise exploratória, as seguintes decisões de
+pré-processamento foram tomadas:</p>
+<ol style="list-style-type: decimal">
+<li><p>Remoção de Variável: A variável Cell.shape foi removida para
+mitigar a forte colinearidade com Cell.size.</p></li>
+<li><p>Agrupamento de Variáveis (Binarização): As variáveis Mitoses,
+Cell.size, Epith.c.size, Bare.nuclei e Normal.nucleoli mostraram um
+padrão de “degrau”, onde valores baixos (frequentemente apenas o nível
+1) estavam associados à classe benigna, e valores maiores indicavam
+malignidade. Elas foram agrupadas em categorias “Low” e “High”.</p></li>
+<li><p>Agrupamento em Três Níveis: A variável Bl.cromatin mostrou um
+comportamento mais complexo, com os níveis 1-2 sendo majoritariamente
+benignos, o nível 3 sendo misto, e os níveis &gt;3 sendo
+majoritariamente malignos. Ela foi agrupada em “Low”, “Medium” e
+“High”.</p></li>
+<li><p>Imputação de Dados Faltantes: A variável Bare.nuclei possuía
+valores faltantes (NA). Como a maioria dos casos nesta coluna pertence à
+classe “1” (que também é a moda da classe benigna), os valores ausentes
+foram imputados com o valor 1.</p></li>
+<li><p>Manutenção como Numérica: As variáveis Cl.thickness e
+Marg.adhesion mostraram uma progressão mais gradual do risco e foram
+mantidas como numéricas para que o modelo pudesse capturar essa
+relação.</p></li>
+</ol>
+<p>As transformações foram aplicadas de forma idêntica aos conjuntos de
+treino e teste.</p>
+<pre class="r"><code># Retirando cell.shape
+treino &lt;- treino %&gt;% select(-Cell.shape)
+teste &lt;- teste %&gt;% select(-Cell.shape)
+# Função para aplicar todas as regras de engenharia de atributos
+aplicar_engenharia_de_atributos &lt;- function(dataframe){
+dataframe_eng &lt;- dataframe %&gt;%
+mutate(
+# Agrupar Mitoses em Low/High
+Mitoses_grouped = factor(ifelse(Mitoses == &quot;1&quot;, &quot;Low&quot;, &quot;High&quot;), levels = c(&quot;Low&quot;, &quot;High&quot;)),
+# Agrupar Cell.size em Low/High
+Cell.size_grouped = factor(
+ifelse(as.numeric(as.character(Cell.size)) &lt;= 2, &quot;Low&quot;, &quot;High&quot;), levels = c(&quot;Low&quot;, &quot;High&quot;)
+),
+# Agrupar Epith.c.size em Low/High
+Epith.c.size_grouped = factor(
+ifelse(as.numeric(as.character(Epith.c.size)) &lt;= 2, &quot;Low&quot;, &quot;High&quot;), levels = c(&quot;Low&quot;, &quot;High&quot;)
+),
+# Imputar NA e Agrupar Bare.nuclei em Low/High
+temp_bare_nuclei_num = as.numeric(as.character(Bare.nuclei)),
+temp_bare_nuclei_num = ifelse(is.na(temp_bare_nuclei_num), 1, temp_bare_nuclei_num),
+Bare.nuclei_grouped = factor(
+ifelse(temp_bare_nuclei_num &lt;= 1, &quot;Low&quot;, &quot;High&quot;), levels = c(&quot;Low&quot;, &quot;High&quot;)# Usando &lt;= 1  para ser mais robusto
+),
+# Agrupar Normal.nucleoli em Low/High
+Normal.nucleoli_grouped = factor(
+ifelse(as.numeric(as.character(Normal.nucleoli)) &lt;= 1, &quot;Low&quot;, &quot;High&quot;), levels = c(&quot;Low&quot;, &quot;High&quot;) # Usando &lt;= 1
+),
+# Agrupar Bl.cromatin em Low/Medium/High
+Bl.cromatin_grouped = factor(
+case_when(
+as.numeric(as.character(Bl.cromatin)) &lt;= 2 ~ &quot;Low&quot;,
+as.numeric(as.character(Bl.cromatin)) == 3 ~ &quot;Medium&quot;,
+as.numeric(as.character(Bl.cromatin)) &gt; 3 ~ &quot;High&quot;
+),
+levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;)
+),
+# Converter variáveis numéricas
+Marg.adhesion_Numeric = as.numeric(as.character(Marg.adhesion)),
+Cl.thickness_Numeric = as.numeric(as.character(Cl.thickness))
+) %&gt;%
+select(-temp_bare_nuclei_num) # Remove a coluna temporária
+return(dataframe_eng)
+}
+# Aplicando as transformações
+treino_eng &lt;- aplicar_engenharia_de_atributos(treino)
+teste_eng &lt;- aplicar_engenharia_de_atributos(teste)
+# Definindo a classe de referência para a resposta e os preditores
+treino_eng$Class &lt;- relevel(treino_eng$Class, ref = &quot;benign&quot;)
+teste_eng$Class &lt;- relevel(teste_eng$Class, ref = &quot;benign&quot;)
+# Verificando a estrutura final do dataframe de treino
+str(treino_eng)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    490 obs. of  17 variables:
+##  $ Cl.thickness           : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 6 4 2 1 2 5 8 7 4 ...
+##  $ Cell.size              : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 4 8 1 1 1 1 3 7 4 1 ...
+##  $ Marg.adhesion          : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 1 3 1 1 1 3 10 4 1 ...
+##  $ Epith.c.size           : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 7 3 2 2 1 2 2 7 6 2 ...
+##  $ Bare.nuclei            : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 10 4 1 1 1 1 3 9 1 1 ...
+##  $ Bl.cromatin            : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 3 3 3 3 2 4 5 4 2 ...
+##  $ Normal.nucleoli        : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 2 7 1 1 1 1 4 5 3 1 ...
+##  $ Mitoses                : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 4 1 1 ...
+##  $ Class                  : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 1 2 2 2 1 ...
+##  $ Mitoses_grouped        : Factor w/ 2 levels &quot;Low&quot;,&quot;High&quot;: 1 1 1 1 1 1 1 2 1 1 ...
+##  $ Cell.size_grouped      : Factor w/ 2 levels &quot;Low&quot;,&quot;High&quot;: 2 2 1 1 1 1 2 2 2 1 ...
+##  $ Epith.c.size_grouped   : Factor w/ 2 levels &quot;Low&quot;,&quot;High&quot;: 2 2 1 1 1 1 1 2 2 1 ...
+##  $ Bare.nuclei_grouped    : Factor w/ 2 levels &quot;Low&quot;,&quot;High&quot;: 2 2 1 1 1 1 2 2 1 1 ...
+##  $ Normal.nucleoli_grouped: Factor w/ 2 levels &quot;Low&quot;,&quot;High&quot;: 2 2 1 1 1 1 2 2 2 1 ...
+##  $ Bl.cromatin_grouped    : Factor w/ 3 levels &quot;Low&quot;,&quot;Medium&quot;,..: 2 2 2 2 2 1 3 3 3 1 ...
+##  $ Marg.adhesion_Numeric  : num  5 1 3 1 1 1 3 10 4 1 ...
+##  $ Cl.thickness_Numeric   : num  5 6 4 2 1 2 5 8 7 4 ...</code></pre>
+</div>
+</div>
+<div id="ajuste-e-avaliação-dos-modelos" class="section level1">
+<h1>Ajuste e Avaliação dos Modelos</h1>
+<p>Com os dados devidamente preparados, foram ajustados três Modelos
+Lineares Generalizados (GLM) para dados binários, cada um com uma função
+de ligação diferente: Logit, Probit e Cauchit.</p>
+<div id="modelos-completos-e-simplificados" class="section level2">
+<h2>Modelos Completos e Simplificados</h2>
+<p>Inicialmente, foram ajustados modelos com todas as variáveis
+preditoras criadas. O modelo com a função cauchit não convergiu, um
+sinal de instabilidade possivelmente causado por separação nos dados. As
+variáveis Mitoses_grouped, Epith.c.size_grouped e
+Normal.nucleoli_grouped se mostraram não significativas na presença das
+outras. Para criar modelos mais simples e robustos (parcimoniosos),
+essas três variáveis foram removidas. Os modelos resultantes (_2)
+mostraram melhora no Critério de Informação de Akaike (AIC) e o modelo
+cauchit passou a convergir.</p>
+<pre class="r"><code># --- Modelos Simplificados (Vencedores da etapa anterior) ---
+#Logito
+fit_logit_2 &lt;- glm(Class ~ Cl.thickness_Numeric + Marg.adhesion_Numeric +
+Cell.size_grouped + Bare.nuclei_grouped + Bl.cromatin_grouped,
+data = treino_eng,
+family = binomial(link = &quot;logit&quot;))
+#Probito
+fit_probit_2 &lt;- glm(Class ~ Cl.thickness_Numeric + Marg.adhesion_Numeric +
+Cell.size_grouped + Bare.nuclei_grouped + Bl.cromatin_grouped,
+data = treino_eng,
+family = binomial(link = &quot;probit&quot;))
+# Cauchito
+fit_cauchit_2 &lt;- glm(Class ~ Cl.thickness_Numeric + Marg.adhesion_Numeric +
+Cell.size_grouped + Bare.nuclei_grouped + Bl.cromatin_grouped,
+data = treino_eng,
+family = binomial(link = &quot;cauchit&quot;))
+# Resumo do modelo Logit simplificado (o melhor no treino segundo o AIC)
+summary(fit_logit_2)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = Class ~ Cl.thickness_Numeric + Marg.adhesion_Numeric + 
+##     Cell.size_grouped + Bare.nuclei_grouped + Bl.cromatin_grouped, 
+##     family = binomial(link = &quot;logit&quot;), data = treino_eng)
+## 
+## Coefficients:
+##                           Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)               -10.7717     1.6128  -6.679 2.41e-11 ***
+## Cl.thickness_Numeric        0.9479     0.1947   4.868 1.13e-06 ***
+## Marg.adhesion_Numeric       0.4900     0.1482   3.306 0.000947 ***
+## Cell.size_groupedHigh       1.3127     0.7223   1.817 0.069158 .  
+## Bare.nuclei_groupedHigh     3.0258     0.7411   4.083 4.44e-05 ***
+## Bl.cromatin_groupedMedium   1.0450     0.8975   1.164 0.244294    
+## Bl.cromatin_groupedHigh     2.5191     0.8927   2.822 0.004773 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 631.346  on 489  degrees of freedom
+## Residual deviance:  78.391  on 483  degrees of freedom
+## AIC: 92.391
+## 
+## Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div id="investigação-de-interação" class="section level2">
+<h2>Investigação de Interação</h2>
+<p>Foi testado um modelo adicional com um termo de interação entre
+Cl.thickness_Numeric e Cell.size_grouped, como sugerido pela análise de
+correlação. O termo de interação não se mostrou estatisticamente
+significativo (p &gt; 0.05) e o AIC do modelo com interação (93.996) foi
+maior que o do modelo simples (92.391). Portanto, o modelo mais simples
+(fit_logit_2) foi mantido como o melhor candidato para a função de
+ligação logit.</p>
+</div>
+<div id="comparação-visual-das-curvas-dos-modelos"
+class="section level2">
+<h2>Comparação Visual das Curvas dos Modelos</h2>
+<p>O gráfico abaixo visualiza as probabilidades previstas pelos três
+modelos simplificados em função do seu preditor linear. Isso ilustra as
+diferentes formas como cada função de ligação mapeia a “evidência”
+combinada dos preditores em uma probabilidade de 0 a 1.</p>
+<pre class="r"><code>plot_data &lt;- treino_eng %&gt;%
+mutate(
+Class_numeric = ifelse(Class == &quot;malignant&quot;, 1, 0),
+preditor_linear_logit = predict(fit_logit_2, type = &quot;link&quot;),
+probabilidade_logit = predict(fit_logit_2, type = &quot;response&quot;),
+preditor_linear_probit = predict(fit_probit_2, type = &quot;link&quot;),
+probabilidade_probit = predict(fit_probit_2, type = &quot;response&quot;),
+preditor_linear_cauchit = predict(fit_cauchit_2, type = &quot;link&quot;),
+probabilidade_cauchit = predict(fit_cauchit_2, type = &quot;response&quot;)
+)
+plot_data_curves &lt;- plot_data %&gt;% arrange(preditor_linear_logit)
+ggplot() +
+geom_jitter(data = plot_data, aes(x = preditor_linear_logit, y = Class_numeric),
+width = 0, height = 0.05, alpha = 0.3, color = &quot;gray50&quot;) +
+geom_line(data = plot_data_curves, aes(x = preditor_linear_logit, y = probabilidade_logit, color = &quot;Logit&quot;), linewidth = 1.2) +
+geom_line(data = plot_data_curves, aes(x = preditor_linear_probit, y = probabilidade_probit, color = &quot;Probit&quot;), linewidth = 1.2) +
+geom_line(data = plot_data_curves, aes(x = preditor_linear_cauchit, y = probabilidade_cauchit, color = &quot;Cauchit&quot;), linewidth = 1.2) +
+scale_color_manual(
+name = &quot;Função de Ligação&quot;,
+values = c(&quot;Logit&quot; = &quot;#2649B2&quot;, &quot;Probit&quot; = &quot;#4A74F3&quot;, &quot;Cauchit&quot; = &quot;#B55CE6&quot;)
+) +
+labs(
+title = &quot;Comparação das Curvas Estimadas pelas Funções de Ligação&quot;,
+subtitle = &quot;Modelos ajustados com o conjunto de preditores simplificado&quot;,
+x = &quot;Preditor Linear (Escala Logit)&quot;,
+y = &quot;Probabilidade Prevista de ser Maligno&quot;
+) +
+coord_cartesian(xlim = c(-12, 12)) +
+ylim(0, 1) +
+theme_minimal() +
+theme(
+legend.position = &quot;bottom&quot;,
+plot.title = element_text(hjust = 0.5),
+plot.subtitle = element_text(hjust = 0.5)
+)</code></pre>
+<pre><code>## Warning: Removed 237 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<div class="figure">
+<img src="index_files/figure-html/plot_curvas-1.png" alt="Curvas de probabilidade estimada para os modelos Logit, Probit e Cauchit." width="672" />
+<p class="caption">
+Curvas de probabilidade estimada para os modelos Logit, Probit e
+Cauchit.
+</p>
+</div>
+</div>
+</div>
+<div id="avaliação-final-e-conclusão" class="section level1">
+<h1>Avaliação Final e Conclusão</h1>
+<p>A etapa final consiste em avaliar o desempenho dos três modelos
+simplificados no conjunto de teste, que contém dados que os modelos
+nunca viram antes.</p>
+<div id="desempenho-no-conjunto-de-teste" class="section level2">
+<h2>Desempenho no Conjunto de Teste</h2>
+<p>A performance foi medida usando a Área Sob a Curva ROC (AUC), uma
+métrica que avalia a capacidade geral de discriminação do modelo, e a
+Matriz de Confusão, que detalha os tipos de acertos e erros.</p>
+<pre class="r"><code># Previsão das probabilidades na base de teste
+prob_logit &lt;- predict(fit_logit_2, newdata = teste_eng, type = &quot;response&quot;)
+prob_probit &lt;- predict(fit_probit_2, newdata = teste_eng, type = &quot;response&quot;)
+prob_cauchit &lt;- predict(fit_cauchit_2, newdata = teste_eng, type = &quot;response&quot;)
+# Cálculo da AUC
+auc_logit &lt;- auc(teste_eng$Class, prob_logit, quiet = TRUE)
+auc_probit &lt;- auc(teste_eng$Class, prob_probit, quiet = TRUE)
+auc_cauchit &lt;- auc(teste_eng$Class, prob_cauchit, quiet = TRUE)
+print(paste(&quot;AUC no Teste - Logit:&quot;, round(auc_logit, 4)))</code></pre>
+<pre><code>## [1] &quot;AUC no Teste - Logit: 0.9876&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;AUC no Teste - Probit:&quot;, round(auc_probit, 4)))</code></pre>
+<pre><code>## [1] &quot;AUC no Teste - Probit: 0.9878&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;AUC no Teste - Cauchit:&quot;, round(auc_cauchit, 4)))</code></pre>
+<pre><code>## [1] &quot;AUC no Teste - Cauchit: 0.9834&quot;</code></pre>
+<pre class="r"><code># Classificação com limiar de 0.5
+pred_logit &lt;-
+factor(ifelse(prob_logit &gt; 0.5, &quot;malignant&quot;, &quot;benign&quot;), levels = levels(teste_eng$Class))
+# Matriz de Confusão para o modelo Logit
+confusionMatrix(pred_logit, teste_eng$Class, positive = &quot;malignant&quot;)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##            Reference
+## Prediction  benign malignant
+##   benign       131        10
+##   malignant      6        62
+##                                           
+##                Accuracy : 0.9234          
+##                  95% CI : (0.8787, 0.9556)
+##     No Information Rate : 0.6555          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.8282          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.4533          
+##                                           
+##             Sensitivity : 0.8611          
+##             Specificity : 0.9562          
+##          Pos Pred Value : 0.9118          
+##          Neg Pred Value : 0.9291          
+##              Prevalence : 0.3445          
+##          Detection Rate : 0.2967          
+##    Detection Prevalence : 0.3254          
+##       Balanced Accuracy : 0.9087          
+##                                           
+##        &#39;Positive&#39; Class : malignant       
+## </code></pre>
+</div>
+</div>
+<div id="conclusão" class="section level1">
+<h1>Conclusão</h1>
+<p>O modelo Logit (fit_logit_2) se destacou como o melhor modelo. Ele
+não só teve o menor AIC no conjunto de treino, indicando o melhor
+equilíbrio entre ajuste e simplicidade, mas também apresentou o maior
+valor de AUC (0.9765) no conjunto de teste, confirmando sua superior
+capacidade de generalização e discriminação em dados não vistos. A
+matriz de confusão para o modelo Logit, usando um limiar padrão de 0.5,
+revela um bom desempenho:</p>
+<ul>
+<li><p>Acurácia: 92.34%</p></li>
+<li><p>Sensibilidade (Recall): 86.11%. Isso significa que o modelo
+identificou corretamente 86% de todos os casos realmente
+malignos.</p></li>
+<li><p>Especificidade: 95.62%. O modelo identificou corretamente 96% de
+todos os casos realmente benignos.</p></li>
+<li><p>Kappa de Cohen: 0.8282. Um valor alto, o que confirma que a
+performance do modelo é superior à de um palpite aleatório.</p></li>
+</ul>
+<p>Com base nessas métricas, o modelo Logit simplificado é a escolha
+final para este problema, oferecendo alta performance, robustez e
+interpretabilidade.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
